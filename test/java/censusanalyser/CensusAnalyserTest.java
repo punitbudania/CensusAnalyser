@@ -132,8 +132,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CSVBuilderException.ExceptionType.INCORRECT_DELIMITER,e.type);
         }
     }
-
-    /*
+    
     @Test
     public void givenIndianStateData_WithIncorrectHeader_ShouldThrowException()
     {
@@ -148,8 +147,6 @@ public class CensusAnalyserTest {
             Assert.assertEquals(CSVBuilderException.ExceptionType.INCORRECT_HEADER,e.type);
         }
     }
-    
-     */
 
     @Test
     public void givenIndianCensusData_whenSortedOnState_ShouldReturnSortedResult()
