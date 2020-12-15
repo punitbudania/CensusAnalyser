@@ -20,7 +20,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals(29,numOfRecords);
         } catch (CSVBuilderException e) { }
     }
-
+    
     @Test
     public void givenIndiaCensusData_WithWrongFile_ShouldThrowException()
     {
