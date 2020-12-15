@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import java.io.IOException;
+
 public class CensusAnalyserTest {
 
     private static final String INDIA_CENSUS_CSV_FILE_PATH = "C:\\Users\\PUNIT BUDANIA\\IdeaProjects\\CensusAnalyser\\src\\test\\resources\\IndiaStateCensusData.csv";
@@ -98,6 +100,21 @@ public class CensusAnalyserTest {
             censusAnalyser.loadIndianStateCode(WRONG_CSV_FILE_TYPE);
         } catch (CSVBuilderException e) {
             Assert.assertEquals(CSVBuilderException.ExceptionType.INCORRECT_TYPE,e.type);
+        }
+    }
+
+    @Test
+    public void givenIndianStateData_WithIncorrectDelimiter_ShouldThrowException()
+    {
+        try {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            ExpectedException exceptionRule = ExpectedException.none();
+            exceptionRule.expect(CSVBuilderException.class);
+            censusAnalyser.loadIndiaCensusData(INDIA_STATE_CSV_FILE_PATH);
+        }
+        catch (CSVBuilderException e)
+        {
+            Assert.assertEquals(CSVBuilderException.ExceptionType.INCORRECT_DELIMITER,e.type);
         }
     }
 
