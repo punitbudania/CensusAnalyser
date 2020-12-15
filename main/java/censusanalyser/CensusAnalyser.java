@@ -44,13 +44,6 @@ public class CensusAnalyser {
         }
     }
 
-    private <E> int getCount(Iterator<E> iterator)
-    {
-        Iterable<E> csvIterable = () -> iterator;
-        int numOfEateries = (int) StreamSupport.stream(csvIterable.spliterator(), false).count();
-        return numOfEateries;
-    }
-
     public String getStateWiseSortedCensusData() throws CSVBuilderException {
         if(censusCSVList == null || censusCSVList.size() == 0)
         {
