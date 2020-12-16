@@ -79,7 +79,7 @@ public class CensusAnalyser {
         }
     }
 
-    public String getStateWiseSortedCensusData() throws CSVBuilderException {
+    public String getStateWiseSortedCensusData() throws CSVBuilderException, IOException {
         if(censusCSVList == null || censusCSVList.size() == 0)
         {
             throw new CSVBuilderException("No Census Data" , CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
@@ -87,10 +87,11 @@ public class CensusAnalyser {
         Comparator<IndiaCensusCSV> censusComparator = Comparator.comparing(census -> census.state);
         sort(censusComparator);
         String sortedStateCensusJson = new Gson().toJson(censusCSVList);
+        JsonIOService.writeJsonFile("StateWiseSortedCensusData", sortedStateCensusJson);
         return sortedStateCensusJson;
     }
 
-    public String getPopulationWiseSortedCensusData() throws CSVBuilderException {
+    public String getPopulationWiseSortedCensusData() throws CSVBuilderException, IOException {
         if(censusCSVList == null || censusCSVList.size() == 0)
         {
             throw new CSVBuilderException("No Census Data" , CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
@@ -98,6 +99,19 @@ public class CensusAnalyser {
         Comparator<IndiaCensusCSV> censusComparator = Comparator.comparing(census -> census.population);
         sort(censusComparator.reversed());
         String sortedStateCensusJson = new Gson().toJson(censusCSVList);
+        JsonIOService.writeJsonFile("PopulationWiseSortedCensusData", sortedStateCensusJson);
+        return sortedStateCensusJson;
+    }
+
+    public String getAreaWiseSortedCensusData() throws CSVBuilderException, IOException {
+        if(censusCSVList == null || censusCSVList.size() == 0)
+        {
+            throw new CSVBuilderException("No Census Data" , CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaCensusCSV> censusComparator = Comparator.comparing(census -> census.areaInSqKm);
+        sort(censusComparator.reversed());
+        String sortedStateCensusJson = new Gson().toJson(censusCSVList);
+        JsonIOService.writeJsonFile("AreaWiseSortedCensusData", sortedStateCensusJson);
         return sortedStateCensusJson;
     }
 
