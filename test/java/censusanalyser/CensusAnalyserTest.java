@@ -162,7 +162,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals("Andhra Pradesh", censusCSV[0].state);
             Assert.assertEquals("West Bengal", censusCSV[28].state);
         }
-        catch (CSVBuilderException e) {}
+        catch (CSVBuilderException | IOException e) {}
     }
 
     @Test
@@ -192,7 +192,7 @@ public class CensusAnalyserTest {
             Assert.assertEquals("Uttar Pradesh", censusCSV[0].state);
             Assert.assertEquals("Sikkim", censusCSV[28].state);
         }
-        catch (CSVBuilderException e) {}
+        catch (CSVBuilderException | IOException e) {}
     }
 
     @Test
@@ -208,5 +208,20 @@ public class CensusAnalyserTest {
             Assert.assertEquals("Arunachal Pradesh", censusCSV[28].state);
         }
         catch (CSVBuilderException e) {}
+    }
+
+    @Test
+    public void givenIndianCensusData_whenSortedAreaWise_ShouldReturnSortedResult()
+    {
+        try
+        {
+            CensusAnalyser censusAnalyser = new CensusAnalyser();
+            censusAnalyser.loadIndiaCensusData(INDIA_CENSUS_CSV_FILE_PATH);
+            String sortedCensusData = censusAnalyser.getAreaWiseSortedCensusData();
+            IndiaCensusCSV[] censusCSV = new Gson().fromJson(sortedCensusData, IndiaCensusCSV[].class);
+            Assert.assertEquals("Rajasthan", censusCSV[0].state);
+            Assert.assertEquals("Goa", censusCSV[28].state);
+        }
+        catch (CSVBuilderException | IOException e) {}
     }
 }
