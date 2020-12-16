@@ -106,4 +106,34 @@ public class CensusAnalyser {
             }
         }
     }
+
+    public String getSortedIndianStateData() throws CSVBuilderException
+    {
+        if (stateCSVIList == null || stateCSVIList.size() == 0)
+        {
+            throw new CSVBuilderException("No Census Data", CSVBuilderException.ExceptionType.NO_CENSUS_DATA);
+        }
+        Comparator<IndiaStateCodeCSV> censusComparator = Comparator.comparing(census -> census.stateCode);
+        sortState(censusComparator);
+        String sortedIndianSateJson = new Gson().toJson(stateCSVIList);
+        return sortedIndianSateJson;
+    }
+
+    private void sortState(Comparator censusComparator)
+    {
+        for (int i=0; i<stateCSVIList.size()-1; i++)
+        {
+            for (int j=0; j<stateCSVIList.size()-i-1; j++)
+            {
+                IndiaStateCodeCSV census1 = stateCSVIList.get(j);
+                IndiaStateCodeCSV census2 = stateCSVIList.get(j+1);
+                if(censusComparator.compare(census1, census2) > 0)
+                {
+                    stateCSVIList.set(j, census2);
+                    stateCSVIList.set(j+1, census1);
+                }
+            }
+        }
+    }
+
 }
